@@ -179,7 +179,6 @@ const Testimonials = () => {
     setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
   };
 
-  // Auto-advance every 3.5s, pause on hover
   useEffect(() => {
     if (isPaused) return;
     const timerId = setInterval(() => {
@@ -204,46 +203,47 @@ const Testimonials = () => {
           </p>
         </div>
 
-        {/* Desktop Carousel */}
-        <div className="hidden lg:block">
+        <div>
           <div
             className="relative max-w-4xl mx-auto"
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
+            onTouchStart={() => setIsPaused(true)}
+            onTouchEnd={() => setIsPaused(false)}
           >
             <div
               key={currentIndex}
-              className="bg-white rounded-2xl p-8 text-center shadow-lg transition-all duration-700 ease-out will-change-transform"
+              className="bg-white rounded-2xl p-6 md:p-8 text-center shadow-lg transition-all duration-700 ease-out will-change-transform"
             >
-              <div className="flex justify-center mb-6">
+              <div className="flex justify-center mb-4 md:mb-6">
                 {Array.from({ length: 5 }, (_, i) => (
                   <span
                     key={i}
-                    className={`text-2xl ${i < testimonials[currentIndex].rating ? 'text-yellow-400' : 'text-gray-300'}`}
+                    className={`text-xl md:text-2xl ${i < testimonials[currentIndex].rating ? 'text-yellow-400' : 'text-gray-300'}`}
                   >
                     ★
                   </span>
                 ))}
               </div>
               
-              <blockquote className="text-xl text-gray-600 mb-8 italic">
+              <blockquote className="text-base md:text-xl text-gray-600 mb-6 md:mb-8 italic">
                 "{testimonials[currentIndex].content}"
               </blockquote>
               
-              <div className="flex items-center justify-center gap-4">
+              <div className="flex items-center justify-center gap-3 md:gap-4">
                 {testimonials[currentIndex].image ? (
                 <img
                   src={testimonials[currentIndex].image}
                   alt={testimonials[currentIndex].name}
-                  className="w-16 h-16 rounded-full object-cover"
+                  className="w-12 h-12 md:w-16 md:h-16 rounded-full object-cover"
                 />
                 ) : (
-                  <div className="w-16 h-16 rounded-full bg-[#5C3E94] flex items-center justify-center text-white text-2xl font-bold">
+                  <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-[#5C3E94] flex items-center justify-center text-white text-xl md:text-2xl font-bold">
                     {testimonials[currentIndex].name.charAt(0).toUpperCase()}
                   </div>
                 )}
                 <div>
-                  <h4 className="font-bold text-[#5C3E94] text-lg">
+                  <h4 className="font-bold text-[#5C3E94] text-base md:text-lg">
                     {testimonials[currentIndex].name}
                   </h4>
                   <div className="flex items-center gap-2">
@@ -251,10 +251,10 @@ const Testimonials = () => {
                       <img 
                         src={testimonials[currentIndex].roleIcon} 
                         alt="Country flag" 
-                        className="w-4 h-4"
+                        className="w-3 h-3 md:w-4 md:h-4"
                       />
                     )}
-                    <p className="text-gray-500">
+                    <p className="text-sm md:text-base text-gray-500">
                     {testimonials[currentIndex].role}
                   </p>
                   </div>
@@ -262,96 +262,36 @@ const Testimonials = () => {
               </div>
             </div>
 
-            {/* Navigation Buttons */}
             <button
               onClick={prevTestimonial}
-              className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-[#5C3E94] text-white p-3 rounded-full hover:bg-[#412B6B] hover:scale-110 transition-all duration-300"
+              className="absolute left-2 md:left-4 top-1/2 transform -translate-y-1/2 bg-[#5C3E94] text-white p-2 md:p-3 rounded-full hover:bg-[#412B6B] hover:scale-110 transition-all duration-300 z-10"
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
             </button>
             
             <button
               onClick={nextTestimonial}
-              className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-[#5C3E94] text-white p-3 rounded-full hover:bg-[#412B6B] hover:scale-110 transition-all duration-300"
+              className="absolute right-2 md:right-4 top-1/2 transform -translate-y-1/2 bg-[#5C3E94] text-white p-2 md:p-3 rounded-full hover:bg-[#412B6B] hover:scale-110 transition-all duration-300 z-10"
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </button>
 
-            {/* Dots Indicator */}
-            <div className="flex justify-center mt-8 gap-2">
+            <div className="flex justify-center mt-6 md:mt-8 gap-2 flex-wrap max-w-md mx-auto">
               {testimonials.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentIndex(index)}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 hover:scale-125 ${
+                  className={`w-2 h-2 md:w-3 md:h-3 rounded-full transition-all duration-300 hover:scale-125 ${
                     index === currentIndex ? 'bg-[#5C3E94]' : 'bg-gray-300'
                   }`}
                 />
               ))}
             </div>
           </div>
-        </div>
-
-        {/* Mobile Grid */}
-        <div className="lg:hidden grid md:grid-cols-2 gap-6">
-          {testimonials.slice(0, 4).map((testimonial, index) => (
-            <div
-              key={testimonial.id}
-              data-aos="fade-up"
-              data-aos-delay={index * 100}
-              className="bg-white rounded-xl p-6 hover:-translate-y-2 transition-all duration-300 shadow-lg"
-            >
-              <div className="flex justify-center mb-4">
-                {Array.from({ length: 5 }, (_, i) => (
-                  <span
-                    key={i}
-                    className={`text-2xl ${i < testimonial.rating ? 'text-yellow-400' : 'text-gray-300'}`}
-                  >
-                    ★
-                  </span>
-                ))}
-              </div>
-              
-              <blockquote className="text-gray-700 mb-6 italic">
-                "{testimonial.content}"
-              </blockquote>
-              
-              <div className="flex items-center gap-3">
-                {testimonial.image ? (
-                <img
-                  src={testimonial.image}
-                  alt={testimonial.name}
-                  className="w-12 h-12 rounded-full object-cover"
-                />
-                ) : (
-                  <div className="w-12 h-12 rounded-full bg-[#CD2C58] flex items-center justify-center text-white text-lg font-bold">
-                    {testimonial.name.charAt(0).toUpperCase()}
-                  </div>
-                )}
-                <div>
-                  <h4 className="font-bold text-[#CD2C58]">
-                    {testimonial.name}
-                  </h4>
-                  <div className="flex items-center gap-2">
-                    {testimonial.roleIcon && (
-                      <img 
-                        src={testimonial.roleIcon} 
-                        alt="Country flag" 
-                        className="w-3 h-3"
-                      />
-                    )}
-                  <p className="text-sm text-gray-600">
-                    {testimonial.role}
-                  </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
         </div>
       </div>
     </section>
